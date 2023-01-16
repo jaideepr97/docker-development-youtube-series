@@ -38,7 +38,7 @@ After the above, we should have: <br/>
 We always start with a `dockerfile` since we need a Go dev environment.
 
 ```
-FROM golang:1.15-alpine as dev-env
+FROM golang:1.18-alpine as dev-env
 
 WORKDIR /app
 
@@ -109,7 +109,7 @@ We can also test our access to our kubernetes cluster with the config that is mo
 
 ```
 apk add --no-cache curl
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.24.0/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 mv ./kubectl /usr/local/bin/kubectl
 ```
@@ -207,7 +207,7 @@ Since we're also using the client-go library, we need to install the same versio
 the other libraries as we can see in the `go.mod` file, we're using `v0.21.0`
 
 ```
-go get k8s.io/client-go@v0.21.0
+go get k8s.io/client-go@v0.24.4
 ```
 
 Rebuild to ensure no errors:

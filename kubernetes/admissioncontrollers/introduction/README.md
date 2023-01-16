@@ -102,7 +102,7 @@ NOTE: In Windows, container networking is not fully supported. Our container exp
 Let's exit the container and start with `--net host` so our container can access our kubernetes `kind` cluster 
 
 ```
-docker run -it --rm --net host -v ${HOME}/.kube/:/root/.kube/ -v ${PWD}:/app webhook sh
+docker run -it --rm -p 80:80 -v ${HOME}/.kube/:/root/.kube/ -v ${PWD}:/app webhook sh
 ```
 
 We can also test our access to our kubernetes cluster with the config that is mounted in:

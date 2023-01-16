@@ -49,9 +49,9 @@ Build and run the controller
 ```
 # get dev environment: webhook
 
-cd sourcecode
-docker build . -t webhook
-docker run -it --rm -p 80:80 -v ${PWD}:/app webhook sh
+cd source
+docker build . -t webhook-dev
+docker run -it --rm -p 80:80 -v ${PWD}:/app webhook-dev sh
 
 ```
 
@@ -59,7 +59,7 @@ We always start with Hello world! <br/>
 Let's define our basic main module and a web server
 
 ```
-go mod init example-webhook
+go mod init example-mutating-webhook
 ```
 
 New file : `main.go`
@@ -102,7 +102,7 @@ NOTE: In Windows, container networking is not fully supported. Our container exp
 Let's exit the container and start with `--net host` so our container can access our kubernetes `kind` cluster 
 
 ```
-docker run -it --rm -p 80:80 -v ${HOME}/.kube/:/root/.kube/ -v ${PWD}:/app webhook sh
+docker run -it --rm -p 80:80 -v ${HOME}/.kube/:/root/.kube/ -v ${PWD}:/app webhook-dev sh
 ```
 
 We can also test our access to our kubernetes cluster with the config that is mounted in:
@@ -328,7 +328,7 @@ And we'll also need to create a smaller runtime layer in our `dockerfile`
 Full `dockerfile` :
 
 ```
-FROM golang:1.15-alpine as dev-env
+FROM golang:1.18-alpine as dev-env
 
 WORKDIR /app
 
@@ -359,7 +359,7 @@ docker push jaideepr97/example-mutating-webhook:v1
 ```
 
 # apply generated secret
-kubectl -n default apply -f ./tls/example-webhook-tls.yaml
+kubectl -n default apply -f ./tls/example-mutating-webhook-tls.yaml
 
 
 kubectl -n default apply -f rbac.yaml

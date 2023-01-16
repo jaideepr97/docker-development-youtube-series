@@ -27,11 +27,11 @@ cfssl gencert \
   ./tls/ca-csr.json | cfssljson -bare /tmp/example-webhook
 
 #make a secret
-cat <<EOF > ./tls/example-webhook-tls.yaml
+cat <<EOF > ./tls/example-mutating-webhook-tls.yaml
 apiVersion: v1
 kind: Secret
 metadata:
-  name: example-webhook-tls
+  name: example-mutating-webhook-tls
 type: Opaque
 data:
   tls.crt: $(cat /tmp/example-webhook.pem | base64 | tr -d '\n')
